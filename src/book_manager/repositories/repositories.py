@@ -286,6 +286,15 @@ class RepositorioStock(IRepositorio[Stock]):
         self.__stocks.append(stock)
         return stock
 
+    def leer_por_id(self, id: int) -> Optional[Stock]:
+        for stock in self.__stocks:
+            if stock.id == id:
+                return stock
+        return None
+
+    def leer_todos(self) -> List[Stock]:
+        return self.__stocks.copy()
+
     def leer_por_libro(self, libro_id: int) -> Optional[Stock]:
         for stock in self.__stocks:
             if stock.libro.id == libro_id:
