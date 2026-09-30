@@ -337,6 +337,15 @@ class RepositorioCotizacionDolar(IRepositorio[CotizacionDolar]):
         self.__cotizaciones.append(cotizacion)
         return cotizacion
 
+    def leer_por_id(self, id: int) -> Optional[CotizacionDolar]:
+        for cotizacion in self.__cotizaciones:
+            if cotizacion.id == id:
+                return cotizacion
+        return None
+
+    def leer_todos(self) -> List[CotizacionDolar]:
+        return self.__cotizaciones.copy()
+
     def leer_por_tipo_y_fecha(
         self, tipo_id: int, fecha: date
     ) -> Optional[CotizacionDolar]:
@@ -378,3 +387,4 @@ class RepositorioCotizacionDolar(IRepositorio[CotizacionDolar]):
 
         self.__cotizaciones.remove(cotizacion)
         return True
+
