@@ -1,19 +1,5 @@
 # Changelog
 
-## [Ejercicio 07]
-
-- Se creó el archivo main.py como punto de entrada de la aplicación.
-
-## [Ejercicio 06]
-
-- Se implementó la interfaz gráfica por consola.
-- Se desarrollaron los menús interactivos para listar y dar de alta Libros, Géneros y Editoriales.
-
-## [Ejercicio 05]
-
-- se crearon los archivos CSV correspondientes a las entidades del sistema, cada archivo cuenta con un mínimo de 10 registros.
-- en preloaded_data se creó la lógica para leer los archivos csv al momento de iniciar el sistema
-
 ## [Ejercicio 04]
 
 - Se implementaron las clases responsables de la lógica de negocio.
