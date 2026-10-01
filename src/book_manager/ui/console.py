@@ -17,6 +17,11 @@ class ConsoleUI:
             print("1. Gestionar Libros")
             print("2. Gestionar Géneros")
             print("3. Gestionar Editoriales")
+            print("4. Gestionar Monedas")
+            print("5. Gestionar Tipos de Cotización")
+            print("6. Gestionar Cotización del Dólar")
+            print("7. Gestionar Precios")
+            print("8. Gestionar Stock")
             print("0. Salir")
             print("=" * 40)
 
@@ -28,9 +33,19 @@ class ConsoleUI:
                 self.menu_generos()
             elif opcion == '3':
                 self.menu_editoriales()
+            elif opcion == '4':
+                self.menu_monedas()
+            elif opcion == '5':
+                self.menu_tipos_cotizacion()
+            elif opcion == '6':
+                self.menu_cotizaciones()
+            elif opcion == '7':
+                self.menu_precios()
+            elif opcion == '8':
+                self.menu_stocks()
             elif opcion == '0':
                 print("\n¡Gracias por usar Book Manager!")
-                sys.exit(0)
+                break
             else:
                 print("\nOpción inválida. Intente de nuevo.")
 
@@ -309,3 +324,263 @@ class ConsoleUI:
                 print("\nLa editorial no existe.")
         except ValueError:
             print("\nError: ID inválido.")
+
+    # --- CRUD MONEDAS ---
+    def menu_monedas(self):
+        while True:
+            print("\n--- GESTIÓN DE MONEDAS ---")
+            print("1. Listar todas")
+            print("2. Agregar")
+            print("3. Modificar")
+            print("4. Eliminar")
+            print("0. Volver")
+            op = input("Seleccione una opción: ")
+            if op == '1': self.listar_monedas()
+            elif op == '2': self.crear_moneda()
+            elif op == '3': self.modificar_moneda()
+            elif op == '4': self.eliminar_moneda()
+            elif op == '0': break
+            else: print("Opción inválida.")
+
+    def listar_monedas(self):
+        elementos = self.servicios['moneda'].obtener_todos()
+        if not elementos:
+            print("No hay monedas registradas.")
+            return
+        for e in elementos: print(f"[{e.id}] {e.nombre} ({e.simbolo})")
+
+    def crear_moneda(self):
+        print("\nAgregar Nueva Moneda:")
+        try:
+            elementos = self.servicios['moneda'].obtener_todos()
+            nuevo_id = max((e.id for e in elementos), default=0) + 1
+            nombre = input("Ingrese el Nombre: ")
+            simbolo = input("Ingrese el Símbolo: ")
+            self.servicios['moneda'].crear(nuevo_id, nombre, simbolo)
+            print("Creado exitosamente!")
+        except Exception as e:
+            print(f"Error: {e}")
+
+    def modificar_moneda(self):
+        try:
+            id_val = int(input("Ingrese ID a modificar: "))
+            nombre = input("Ingrese nuevo Nombre: ")
+            simbolo = input("Ingrese nuevo Símbolo: ")
+            self.servicios['moneda'].actualizar(id_val, nombre, simbolo)
+            print("Modificado exitosamente!")
+        except Exception as e:
+            print(f"Error: {e}")
+
+    def eliminar_moneda(self):
+        try:
+            id_val = int(input("Ingrese ID a eliminar: "))
+            if self.servicios['moneda'].eliminar(id_val): print("Eliminado exitosamente!")
+            else: print("No existe o error al eliminar.")
+        except Exception as e:
+            print(f"Error: {e}")
+
+    # --- CRUD TIPOS DE COTIZACIÓN ---
+    def menu_tipos_cotizacion(self):
+        while True:
+            print("\n--- GESTIÓN DE TIPOS DE COTIZACIÓN ---")
+            print("1. Listar")
+            print("2. Agregar")
+            print("3. Modificar")
+            print("4. Eliminar")
+            print("0. Volver")
+            op = input("Seleccione una opción: ")
+            if op == '1': self.listar_tipos_cotizacion()
+            elif op == '2': self.crear_tipo_cotizacion()
+            elif op == '3': self.modificar_tipo_cotizacion()
+            elif op == '4': self.eliminar_tipo_cotizacion()
+            elif op == '0': break
+            else: print("Opción inválida.")
+
+    def listar_tipos_cotizacion(self):
+        elementos = self.servicios['tipo_cotizacion'].obtener_todos()
+        if not elementos:
+            print("No hay tipos registrados.")
+            return
+        for e in elementos: print(f"[{e.id}] {e.nombre}")
+
+    def crear_tipo_cotizacion(self):
+        try:
+            elementos = self.servicios['tipo_cotizacion'].obtener_todos()
+            nuevo_id = max((e.id for e in elementos), default=0) + 1
+            nombre = input("Ingrese el Nombre: ")
+            self.servicios['tipo_cotizacion'].crear(nuevo_id, nombre)
+            print("Creado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def modificar_tipo_cotizacion(self):
+        try:
+            id_val = int(input("Ingrese ID a modificar: "))
+            nombre = input("Ingrese nuevo Nombre: ")
+            self.servicios['tipo_cotizacion'].actualizar(id_val, nombre)
+            print("Modificado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def eliminar_tipo_cotizacion(self):
+        try:
+            id_val = int(input("Ingrese ID a eliminar: "))
+            if self.servicios['tipo_cotizacion'].eliminar(id_val): print("Eliminado exitosamente!")
+            else: print("No existe o error.")
+        except Exception as e: print(f"Error: {e}")
+
+    # --- CRUD COTIZACION DOLAR ---
+    def menu_cotizaciones(self):
+        while True:
+            print("\n--- GESTIÓN DE COTIZACIÓN DEL DÓLAR ---")
+            print("1. Listar")
+            print("2. Agregar")
+            print("3. Modificar")
+            print("4. Eliminar")
+            print("0. Volver")
+            op = input("Seleccione una opción: ")
+            if op == '1': self.listar_cotizaciones()
+            elif op == '2': self.crear_cotizacion()
+            elif op == '3': self.modificar_cotizacion()
+            elif op == '4': self.eliminar_cotizacion()
+            elif op == '0': break
+            else: print("Opción inválida.")
+
+    def listar_cotizaciones(self):
+        elementos = self.servicios['cotizacion'].obtener_todos()
+        if not elementos:
+            print("No hay cotizaciones registradas.")
+            return
+        for e in elementos: print(f"[Tipo {e.tipo_cotizacion.id}] {e.fecha}: {e.valor}")
+
+    def crear_cotizacion(self):
+        from datetime import date
+        try:
+            self.listar_tipos_cotizacion()
+            id_tipo = int(input("ID Tipo: "))
+            valor = float(input("Valor numérico: "))
+            self.servicios['cotizacion'].crear(valor, date.today(), id_tipo)
+            print("Creado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def modificar_cotizacion(self):
+        from datetime import date
+        try:
+            id_tipo = int(input("ID Tipo: "))
+            valor = float(input("Nuevo valor: "))
+            self.servicios['cotizacion'].actualizar(valor, date.today(), id_tipo)
+            print("Modificado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def eliminar_cotizacion(self):
+        from datetime import date
+        try:
+            id_tipo = int(input("ID Tipo a eliminar: "))
+            if self.servicios['cotizacion'].eliminar(id_tipo, date.today()): print("Eliminado!")
+            else: print("No se encontró.")
+        except Exception as e: print(f"Error: {e}")
+
+    # --- CRUD PRECIOS ---
+    def menu_precios(self):
+        while True:
+            print("\n--- GESTIÓN DE PRECIOS ---")
+            print("1. Listar")
+            print("2. Agregar")
+            print("3. Modificar")
+            print("4. Eliminar")
+            print("0. Volver")
+            op = input("Seleccione una opción: ")
+            if op == '1': self.listar_precios()
+            elif op == '2': self.crear_precio()
+            elif op == '3': self.modificar_precio()
+            elif op == '4': self.eliminar_precio()
+            elif op == '0': break
+            else: print("Opción inválida.")
+
+    def listar_precios(self):
+        elementos = self.servicios['precio'].obtener_todos()
+        if not elementos:
+            print("No hay precios registrados.")
+            return
+        for e in elementos: print(f"[{e.id}] {e.valor} {e.moneda.simbolo} (Tipo {e.tipo_cotizacion.id if e.tipo_cotizacion else 'N/A'})")
+
+    def crear_precio(self):
+        try:
+            elementos = self.servicios['precio'].obtener_todos()
+            nuevo_id = max((e.id for e in elementos), default=0) + 1
+            valor = float(input("Valor numérico: "))
+            self.listar_monedas()
+            id_moneda = int(input("ID Moneda: "))
+            self.listar_tipos_cotizacion()
+            id_tipo = int(input("ID Tipo Cotización (0 para nulo): "))
+            id_tipo = None if id_tipo == 0 else id_tipo
+            self.servicios['precio'].crear(nuevo_id, valor, id_moneda, id_tipo)
+            print("Creado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def modificar_precio(self):
+        try:
+            id_val = int(input("ID a modificar: "))
+            valor = float(input("Nuevo valor: "))
+            id_moneda = int(input("ID Moneda: "))
+            id_tipo = int(input("ID Tipo Cotización (0 para nulo): "))
+            id_tipo = None if id_tipo == 0 else id_tipo
+            self.servicios['precio'].actualizar(id_val, valor, id_moneda, id_tipo)
+            print("Modificado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def eliminar_precio(self):
+        try:
+            id_val = int(input("ID a eliminar: "))
+            if self.servicios['precio'].eliminar(id_val): print("Eliminado!")
+            else: print("No encontrado.")
+        except Exception as e: print(f"Error: {e}")
+
+    # --- CRUD STOCKS ---
+    def menu_stocks(self):
+        while True:
+            print("\n--- GESTIÓN DE STOCK ---")
+            print("1. Listar")
+            print("2. Agregar")
+            print("3. Modificar")
+            print("4. Eliminar")
+            print("0. Volver")
+            op = input("Seleccione una opción: ")
+            if op == '1': self.listar_stocks()
+            elif op == '2': self.crear_stock()
+            elif op == '3': self.modificar_stock()
+            elif op == '4': self.eliminar_stock()
+            elif op == '0': break
+            else: print("Opción inválida.")
+
+    def listar_stocks(self):
+        elementos = self.servicios['stock'].obtener_todos()
+        if not elementos:
+            print("No hay stocks registrados.")
+            return
+        for e in elementos: print(f"[{e.id}] Libro {e.libro.titulo}: {e.cantidad} unidades")
+
+    def crear_stock(self):
+        try:
+            elementos = self.servicios['stock'].obtener_todos()
+            nuevo_id = max((e.id for e in elementos), default=0) + 1
+            self.listar_libros()
+            id_libro = int(input("ID Libro: "))
+            cantidad = int(input("Cantidad: "))
+            self.servicios['stock'].crear(nuevo_id, cantidad, id_libro)
+            print("Creado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def modificar_stock(self):
+        try:
+            id_val = int(input("ID de Stock a modificar: "))
+            id_libro = int(input("ID Libro: "))
+            cantidad = int(input("Nueva Cantidad: "))
+            self.servicios['stock'].actualizar(id_val, cantidad, id_libro)
+            print("Modificado exitosamente!")
+        except Exception as e: print(f"Error: {e}")
+
+    def eliminar_stock(self):
+        try:
+            id_val = int(input("ID a eliminar: "))
+            if self.servicios['stock'].eliminar(id_val): print("Eliminado!")
+            else: print("No encontrado.")
+        except Exception as e: print(f"Error: {e}")
