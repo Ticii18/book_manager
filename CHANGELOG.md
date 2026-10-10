@@ -1,3 +1,8 @@
+## [Ejercicio 02]
+- Se implementó la clase `ConexionDB` para administrar el motor de conexión y las sesiones mediante SQLAlchemy.
+- Se configuró la lectura de `DATABASE_URL` desde las variables de entorno.
+- Se comprobó la conexión con PostgreSQL mediante una consulta de prueba.
+
 # Changelog
 
 ## [Ejercicio 01]
