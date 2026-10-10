@@ -1,3 +1,8 @@
+## [Ejercicio 04]
+- Se definieron los modelos de las ocho tablas del sistema con SQLAlchemy.
+- Se establecieron los tipos de datos y las claves primarias.
+- Se agregaron las claves foráneas y relaciones entre las tablas.
+
 ## [Ejercicio 03]
 - Se implementó un context manager para administrar las transacciones con SQLAlchemy.
 - Se agregó la confirmación de cambios y la reversión ante errores.
