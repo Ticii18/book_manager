@@ -1,3 +1,8 @@
+## [Ejercicio 03]
+- Se implementó un context manager para administrar las transacciones con SQLAlchemy.
+- Se agregó la confirmación de cambios y la reversión ante errores.
+- Se incorporó el cierre de la sesión al finalizar la transacción.
+
 ## [Ejercicio 02]
 - Se implementó la clase `ConexionDB` para administrar el motor de conexión y las sesiones mediante SQLAlchemy.
 - Se configuró la lectura de `DATABASE_URL` desde las variables de entorno.

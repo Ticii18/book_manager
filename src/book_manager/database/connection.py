@@ -8,6 +8,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
+# Importamos herramientas para crear un context manager.
+from contextlib import contextmanager
+from collections.abc import Generator
+
 
 class ConexionDB:
     """Administra el motor de conexión y las sesiones de SQLAlchemy."""
@@ -41,3 +45,22 @@ class ConexionDB:
     def cerrar_conexion(self) -> None:
         """Libera los recursos asociados al motor de conexión."""
         self._engine.dispose()
+
+    @contextmanager
+    def transaccion(self) -> Generator[Session, None, None]:
+      """Administra una transacción y gestiona su confirmación o reversión."""
+      # Creamos una sesión para la transacción.
+      sesion = self._session_factory()
+      try:
+        # Entregamos la sesión para realizar las operaciones.
+        yield sesion
+        # Confirmamos los cambios si no ocurrió ningún error.
+        sesion.commit()
+        
+      except Exception:
+        # Revertimos los cambios si ocurre un error.
+        sesion.rollback()
+        raise
+      finally:
+        # Cerramos la sesión al finalizar.
+        sesion.close()
