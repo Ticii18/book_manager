@@ -2,24 +2,28 @@
 
 ## Sprint actual
 
-Sprint 1
+Sprint 2
 
 ## Objetivo
 
-Desarrollar el sistema Book Manager aplicando Programación Orientada a
-Objetos, encapsulamiento, relaciones entre objetos, clases de lógica y
-operaciones CRUD.
+Aplicar los conocimientos de programación orientada a objetos y
+persistencia de datos, incorporando una base de datos relacional
+al sistema Book Manager.
 
 ## Introducción
 
-Book Manager es un proyecto desarrollado como parte del trabajo práctico
-integrador de la materia.
+Book Manager es un proyecto desarrollado como parte del trabajo
+práctico integrador de la materia. El sistema está organizado en
+entidades, repositorios, servicios y una interfaz de usuario por consola.
 
-El sistema será construido utilizando Python y una arquitectura organizada
-en entidades, repositorios, servicios y una interfaz de usuario por consola.
+## Contexto del Sprint 2
 
-## Contexto del Sprint 1
+En este sprint se ampliará el sistema para persistir los datos en una
+base de datos relacional utilizando SQLAlchemy ORM.
 
-En este sprint se realiza la inicialización del proyecto, la configuración
-del sistema de versionado y la creación de la estructura base de directorios
-que será utilizada durante el desarrollo del trabajo práctico.
+Se trabajará en la migración de los datos almacenados en archivos hacia
+tablas relacionales, la configuración de una conexión segura, la carga
+inicial de datos y la realización de consultas a APIs externas.
+
+El desarrollo parte de la última versión versionada en la rama Sprint_1.
+Los cambios de esta etapa se realizarán en la rama Sprint_2.
