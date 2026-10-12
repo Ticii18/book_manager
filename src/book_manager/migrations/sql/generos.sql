@@ -1,0 +1,17 @@
+INSERT INTO generos (id, nombre) VALUES ('1', 'ficcion');
+INSERT INTO generos (id, nombre) VALUES ('2', 'romance');
+INSERT INTO generos (id, nombre) VALUES ('3', 'aventura');
+INSERT INTO generos (id, nombre) VALUES ('4', 'terror');
+INSERT INTO generos (id, nombre) VALUES ('5', 'comedia');
+INSERT INTO generos (id, nombre) VALUES ('6', 'suspenso');
+INSERT INTO generos (id, nombre) VALUES ('7', 'accion');
+INSERT INTO generos (id, nombre) VALUES ('8', 'eduvativo');
+INSERT INTO generos (id, nombre) VALUES ('9', 'misterio');
+INSERT INTO generos (id, nombre) VALUES ('10', 'thriller');
+INSERT INTO generos (id, nombre) VALUES ('11', 'Fantasía');
+INSERT INTO generos (id, nombre) VALUES ('12', 'Infantil');
+INSERT INTO generos (id, nombre) VALUES ('13', 'Juvenil');
+INSERT INTO generos (id, nombre) VALUES ('14', 'Cuentos');
+INSERT INTO generos (id, nombre) VALUES ('15', 'Ensayo');
+INSERT INTO generos (id, nombre) VALUES ('16', 'Psicoanálisis');
+INSERT INTO generos (id, nombre) VALUES ('17', 'Fábula');

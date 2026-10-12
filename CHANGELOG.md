@@ -1,3 +1,9 @@
+## [Ejercicio 05]
+- Se implementó la función `migrar_datos` para el procesamiento de CSV.
+- Se generaron los archivos SQL con las sentencias de inserción dentro de `migrations/sql/`.
+- Se cargaron los registros a la BD correctamente.
+
+
 ## [Ejercicio 04]
 - Se definieron los modelos de las ocho tablas del sistema con SQLAlchemy.
 - Se establecieron los tipos de datos y las claves primarias.

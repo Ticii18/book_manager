@@ -1,0 +1,10 @@
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('1', 'Oficial');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('2', 'Blue');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('3', 'MEP (Bolsa)');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('4', 'CCL (Contado con Liqui)');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('5', 'Turista / Tarjeta');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('6', 'Cripto');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('7', 'Mayorista');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('8', 'Minorista');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('9', 'Compra');
+INSERT INTO tipos_cotizacion (id, nombre) VALUES ('10', 'Venta');

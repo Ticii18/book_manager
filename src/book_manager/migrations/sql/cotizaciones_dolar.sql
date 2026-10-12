@@ -1,0 +1,10 @@
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('1', '2026-09-25', '1000.50', '1', '1');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('2', '2026-09-25', '1250.00', '1', '2');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('3', '2026-09-26', '1001.00', '1', '1');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('4', '2026-09-26', '1260.00', '1', '2');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('5', '2026-09-27', '1002.50', '1', '1');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('6', '2026-09-27', '1240.00', '1', '2');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('7', '2026-09-28', '1003.00', '1', '1');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('8', '2026-09-28', '1235.00', '1', '2');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('9', '2026-09-29', '1003.50', '1', '1');
+INSERT INTO cotizaciones_dolar (id, fecha, valor, moneda_id, tipo_cotizacion_id) VALUES ('10', '2026-09-29', '1245.00', '1', '2');

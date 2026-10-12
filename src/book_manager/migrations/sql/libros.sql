@@ -1,0 +1,10 @@
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('1', '978-950-49-9519-7', 'Una historia de felicidad', 'Pedro Saborido', '5', '7', '1');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('2', '978-950-04-1957-4', 'Harry Potter y la piedra filosofal', 'J.K Rowling', '11', '1', '2');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('3', '978-950-49-9244-8', 'Como entrenar a tu Dragon', 'Cressida Cowell', '3', '3', '5');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('4', '978-950-04-2599-5', 'El Aleph', 'Jorge Luis Borges', '14', '1', '7');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('5', '978-987-738-161-0', 'Nacida bajo el sol de Acuario', 'Florencia Bonellu', '1', '2', '10');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('6', '978-950-04-2777-7', 'El extranjero', 'Camus Albert', '1', '1', '9');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('7', '978-987-769-444-4', 'Una casa sola', 'Almada Selva', '1', '4', '3');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('8', '978-84-129158-2-2', 'Clinica del exceso', 'Cosenza Domencio', '16', '5', '3');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('9', '978-950-04-4019-6', 'El Principito', 'Antointe Le Saint-Exupery', '17', '1', '2');
+INSERT INTO libros (id, isbn, titulo, autor, genero_id, editorial_id, precio_id) VALUES ('10', '978-842-535-686-5', 'Finales que merecen una historia', 'Albert Espinosa', '14', '2', '2');

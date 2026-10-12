@@ -1,0 +1,10 @@
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('1', '1', '10');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('2', '2', '5');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('3', '3', '9');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('4', '4', '17');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('5', '5', '15');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('6', '6', '4');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('7', '7', '0');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('8', '8', '8');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('9', '9', '10');
+INSERT INTO stocks (id, libro_id, cantidad) VALUES ('10', '10', '3');

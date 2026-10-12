@@ -1,0 +1,10 @@
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('1', '15500.50', '1', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('2', '25', '2', '2');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('3', '20000', '1', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('4', '15.50', '3', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('5', '32000', '1', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('6', '10', '2', '3');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('7', '18500', '1', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('8', '40', '5', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('9', '9500', '1', '1');
+INSERT INTO precios (id, valor, moneda_id, tipo_cotizacion_id) VALUES ('10', '12', '2', '2');

@@ -1,0 +1,10 @@
+INSERT INTO editoriales (id, nombre) VALUES ('1', 'Emecé Editores');
+INSERT INTO editoriales (id, nombre) VALUES ('2', 'Alfaguara');
+INSERT INTO editoriales (id, nombre) VALUES ('3', 'Planeta Junior');
+INSERT INTO editoriales (id, nombre) VALUES ('4', 'RANDOM HOUSE');
+INSERT INTO editoriales (id, nombre) VALUES ('5', 'Xoroi Ediciones');
+INSERT INTO editoriales (id, nombre) VALUES ('6', 'GRIJALBO');
+INSERT INTO editoriales (id, nombre) VALUES ('7', 'Editorial Planeta');
+INSERT INTO editoriales (id, nombre) VALUES ('8', 'A-Z Editora');
+INSERT INTO editoriales (id, nombre) VALUES ('9', 'Macmillan');
+INSERT INTO editoriales (id, nombre) VALUES ('10', 'Loqueleo');
