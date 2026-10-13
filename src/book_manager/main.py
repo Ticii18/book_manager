@@ -49,8 +49,8 @@ def main(import_default_data: bool = True):
         print("Datos iniciales cargados correctamente.")
 
     servicios = {
-        'genero': GeneroService(repo_genero),
-        'editorial': EditorialService(repo_editorial),
+        'genero': GeneroService(repo_genero, repo_libro),
+        'editorial': EditorialService(repo_editorial, repo_libro),
         'moneda': MonedaService(repo_moneda),
         'tipo_cotizacion': TipoCotizacionService(repo_tipo),
         'precio': PrecioService(repo_precio, repo_moneda, repo_tipo),

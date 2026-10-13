@@ -1,3 +1,10 @@
+## [Ejercicio 06]
+- Se migraron los repositorios para utilizar persistencia en base de datos.
+- Se implementó la clase genérica `RepositorioBaseSQL` heredando de `IRepositorio`.
+- Se definió la interfaz `IServicio` y la clase base genérica `ServicioBase` para reutilizar lógica CRUD en los servicios.
+
+
+
 ## [Ejercicio 05]
 - Se implementó la función `migrar_datos` para el procesamiento de CSV.
 - Se generaron los archivos SQL con las sentencias de inserción dentro de `migrations/sql/`.
