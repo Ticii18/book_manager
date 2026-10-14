@@ -6,7 +6,7 @@ from book_manager.repositories.repositories import (
 from book_manager.services.services import (
     LibroService, GeneroService, EditorialService,
     MonedaService, TipoCotizacionService, PrecioService,
-    StockService, CotizacionDolarService
+    StockService, ServicioCotizacionDolar
 )
 from book_manager.ui.console import ConsoleUI
 
@@ -56,7 +56,7 @@ def main(import_default_data: bool = True):
         'precio': PrecioService(repo_precio, repo_moneda, repo_tipo),
         'libro': LibroService(repo_libro, repo_genero, repo_editorial, repo_precio),
         'stock': StockService(repo_stock, repo_libro),
-        'cotizacion': CotizacionDolarService(repo_cotizacion, repo_moneda, repo_tipo)
+        'cotizacion': ServicioCotizacionDolar(repo_cotizacion, repo_moneda, repo_tipo)
     }
 
     ui = ConsoleUI(servicios)

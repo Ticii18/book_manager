@@ -1,3 +1,9 @@
+## [Ejercicio 07]
+- Se agregó la variable `API_URL` al archivo `.env` con la URL de la API del dólar.
+- Se implementó `obtener_cotizaciones` para descargar las cotizaciones desde la API y registrarlas en la base de datos.
+- Se actualizan las cotizaciones existentes para el mismo tipo y fecha.
+
+
 ## [Ejercicio 06]
 - Se migraron los repositorios para utilizar persistencia en base de datos.
 - Se implementó la clase genérica `RepositorioBaseSQL` heredando de `IRepositorio`.
