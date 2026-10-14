@@ -22,6 +22,9 @@ class ConsoleUI:
             print("6. Gestionar Cotización del Dólar")
             print("7. Gestionar Precios")
             print("8. Gestionar Stock")
+            print("9. Obtener cotizaciones por API")
+            print("10. Ver lista de precios bimonetaria de los libros")
+            print("11. Exportar precios a archivo CSV (todas las monedas)")
             print("0. Salir")
             print("=" * 40)
 
@@ -43,6 +46,12 @@ class ConsoleUI:
                 self.menu_precios()
             elif opcion == '8':
                 self.menu_stocks()
+            elif opcion == '9':
+                self.obtener_cotizaciones_api()
+            elif opcion == '10':
+                self.ver_precios_bimonetarios()
+            elif opcion == '11':
+                self.exportar_precios_csv()
             elif opcion == '0':
                 print("\n¡Gracias por usar Book Manager!")
                 break
@@ -58,6 +67,8 @@ class ConsoleUI:
             print("2. Agregar un nuevo libro")
             print("3. Modificar un libro")
             print("4. Eliminar un libro")
+            print("5. Ver lista de precios bimonetaria")
+            print("6. Exportar precios a archivo CSV")
             print("0. Volver al menú principal")
             
             opcion = input("Seleccione una opción: ")
@@ -70,6 +81,10 @@ class ConsoleUI:
                 self.modificar_libro()
             elif opcion == '4':
                 self.eliminar_libro()
+            elif opcion == '5':
+                self.ver_precios_bimonetarios()
+            elif opcion == '6':
+                self.exportar_precios_csv()
             elif opcion == '0':
                 break
             else:
@@ -435,12 +450,14 @@ class ConsoleUI:
             print("2. Agregar")
             print("3. Modificar")
             print("4. Eliminar")
+            print("5. Obtener cotizaciones por API")
             print("0. Volver")
             op = input("Seleccione una opción: ")
             if op == '1': self.listar_cotizaciones()
             elif op == '2': self.crear_cotizacion()
             elif op == '3': self.modificar_cotizacion()
             elif op == '4': self.eliminar_cotizacion()
+            elif op == '5': self.obtener_cotizaciones_api()
             elif op == '0': break
             else: print("Opción inválida.")
 
@@ -449,7 +466,9 @@ class ConsoleUI:
         if not elementos:
             print("No hay cotizaciones registradas.")
             return
-        for e in elementos: print(f"[Tipo {e.tipo_cotizacion.id}] {e.fecha}: {e.valor}")
+        for e in elementos:
+            tipo_desc = e.tipo_cotizacion.nombre if e.tipo_cotizacion else f"Tipo {e.tipo_cotizacion.id}"
+            print(f"[{e.id}] {tipo_desc} - {e.fecha}: $ {e.valor:.2f} ARS")
 
     def crear_cotizacion(self):
         from datetime import date
@@ -457,25 +476,53 @@ class ConsoleUI:
             self.listar_tipos_cotizacion()
             id_tipo = int(input("ID Tipo: "))
             valor = float(input("Valor numérico: "))
-            self.servicios['cotizacion'].crear(valor, date.today(), id_tipo)
+            self.listar_monedas()
+            id_moneda = int(input("ID Moneda (1 para ARS): "))
+            cotizaciones = self.servicios['cotizacion'].obtener_todos()
+            nuevo_id = max((c.id for c in cotizaciones), default=0) + 1
+            self.servicios['cotizacion'].crear(
+                id_cotizacion=nuevo_id,
+                fecha=date.today(),
+                valor=valor,
+                id_moneda=id_moneda,
+                id_tipo_cotizacion=id_tipo,
+            )
             print("Creado exitosamente!")
         except Exception as e: print(f"Error: {e}")
 
     def modificar_cotizacion(self):
         from datetime import date
         try:
-            id_tipo = int(input("ID Tipo: "))
-            valor = float(input("Nuevo valor: "))
-            self.servicios['cotizacion'].actualizar(valor, date.today(), id_tipo)
+            self.listar_cotizaciones()
+            id_tipo = int(input("ID Tipo de cotización a modificar: "))
+            fecha_str = input("Fecha (YYYY-MM-DD) [dejar vacío para hoy]: ").strip()
+            fecha = date.fromisoformat(fecha_str) if fecha_str else date.today()
+            cot = self.servicios['cotizacion'].obtener_por_tipo_y_fecha(id_tipo, fecha)
+            if not cot:
+                print(f"No existe cotización para el tipo {id_tipo} en la fecha {fecha}.")
+                return
+            valor = float(input(f"Nuevo valor (actual: {cot.valor}): "))
+            self.servicios['cotizacion'].actualizar(
+                id_cotizacion=cot.id,
+                fecha=fecha,
+                valor=valor,
+                id_moneda=cot.moneda.id,
+                id_tipo_cotizacion=id_tipo,
+            )
             print("Modificado exitosamente!")
         except Exception as e: print(f"Error: {e}")
 
     def eliminar_cotizacion(self):
         from datetime import date
         try:
+            self.listar_cotizaciones()
             id_tipo = int(input("ID Tipo a eliminar: "))
-            if self.servicios['cotizacion'].eliminar(id_tipo, date.today()): print("Eliminado!")
-            else: print("No se encontró.")
+            fecha_str = input("Fecha (YYYY-MM-DD) [dejar vacío para hoy]: ").strip()
+            fecha = date.fromisoformat(fecha_str) if fecha_str else date.today()
+            if self.servicios['cotizacion'].eliminar(id_tipo, fecha):
+                print("Eliminado exitosamente!")
+            else:
+                print("No se encontró la cotización especificada.")
         except Exception as e: print(f"Error: {e}")
 
     # --- CRUD PRECIOS ---
@@ -565,7 +612,7 @@ class ConsoleUI:
             self.listar_libros()
             id_libro = int(input("ID Libro: "))
             cantidad = int(input("Cantidad: "))
-            self.servicios['stock'].crear(nuevo_id, cantidad, id_libro)
+            self.servicios['stock'].crear(nuevo_id, id_libro, cantidad)
             print("Creado exitosamente!")
         except Exception as e: print(f"Error: {e}")
 
@@ -574,7 +621,7 @@ class ConsoleUI:
             id_val = int(input("ID de Stock a modificar: "))
             id_libro = int(input("ID Libro: "))
             cantidad = int(input("Nueva Cantidad: "))
-            self.servicios['stock'].actualizar(id_val, cantidad, id_libro)
+            self.servicios['stock'].actualizar(id_val, id_libro, cantidad)
             print("Modificado exitosamente!")
         except Exception as e: print(f"Error: {e}")
 
@@ -584,3 +631,177 @@ class ConsoleUI:
             if self.servicios['stock'].eliminar(id_val): print("Eliminado!")
             else: print("No encontrado.")
         except Exception as e: print(f"Error: {e}")
+
+    # EJERCICIO 08: REPORTES Y OPERACIONES ADICIONALES
+
+    def obtener_cotizaciones_api(self):
+        """ trae las cotizaciones del dólar desde la API externa y las registra en la BD."""
+        print("\n--- OBTENER COTIZACIONES POR API ---")
+        try:
+            print("Consultando la API externa y actualizando la base de datos...")
+            cotizaciones = self.servicios['cotizacion'].obtener_cotizaciones()
+            if not cotizaciones:
+                print("No se recibieron cotizaciones de la API.")
+                return
+
+            print(f"\n¡Se obtuvieron y registraron {len(cotizaciones)} cotizaciones con éxito!")
+            print("-" * 65)
+            print(f"{'Tipo de Cotización':<28} | {'Fecha':<12} | {'Valor (ARS)':<15}")
+            print("-" * 65)
+            for c in cotizaciones:
+                tipo_nombre = c.tipo_cotizacion.nombre if c.tipo_cotizacion else "Desconocido"
+                print(f"{tipo_nombre:<28} | {str(c.fecha):<12} | $ {c.valor:>12.2f}")
+            print("-" * 65)
+        except Exception as e:
+            print(f"\nError al obtener cotizaciones por API: {e}")
+
+    def _obtener_ultimas_cotizaciones(self) -> dict:
+        """Devuelve un diccionario {id_tipo: CotizacionDolar} con la cotización más reciente."""
+        todas = self.servicios['cotizacion'].obtener_todos()
+        ultimas = {}
+        for c in sorted(todas, key=lambda x: (x.fecha, x.id)):
+            if c.tipo_cotizacion:
+                ultimas[c.tipo_cotizacion.id] = c
+        return ultimas
+
+    def _calcular_precio_bimonetario(self, libro, cotizacion) -> tuple[float, float]:
+        """Calcula el par (precio_ars, precio_usd) para un libro dada una cotización del dólar."""
+        valor_original = libro.precio.valor
+        simbolo = (libro.precio.moneda.simbolo or "").strip().upper()
+        tasa = cotizacion.valor if cotizacion.valor > 0 else 1.0
+
+        if simbolo == "USD":
+            precio_usd = valor_original
+            precio_ars = round(valor_original * tasa, 2)
+        else:
+            precio_ars = valor_original
+            precio_usd = round(valor_original / tasa, 2)
+
+        return precio_ars, precio_usd
+
+    def ver_precios_bimonetarios(self):
+        """Muestra la lista de precios en pesos y en la cotización del dólar seleccionada."""
+        print("\n--- LISTA DE PRECIOS BIMONETARIA DE LOS LIBROS ---")
+        libros = self.servicios['libro'].obtener_todos()
+        if not libros:
+            print("No hay libros registrados.")
+            return
+
+        ultimas_cotizaciones = self._obtener_ultimas_cotizaciones()
+        if not ultimas_cotizaciones:
+            print("No hay cotizaciones registradas en la base de datos.")
+            resp = input("¿Desea consultar la API ahora para descargarlas? (s/n): ").strip().lower()
+            if resp == 's':
+                self.obtener_cotizaciones_api()
+                ultimas_cotizaciones = self._obtener_ultimas_cotizaciones()
+            if not ultimas_cotizaciones:
+                print("No se pueden calcular precios bimonetarios sin cotizaciones.")
+                return
+
+        print("\nSeleccione el tipo de cotización del dólar para calcular la bimonetariedad:")
+        tipos_disponibles = sorted(ultimas_cotizaciones.values(), key=lambda c: c.tipo_cotizacion.nombre)
+        for idx, cot in enumerate(tipos_disponibles, start=1):
+            print(f"{idx}. {cot.tipo_cotizacion.nombre} (1 USD = $ {cot.valor:,.2f} ARS | {cot.fecha})")
+
+        try:
+            sel = int(input("\nIngrese el número de la opción deseada: "))
+            if sel < 1 or sel > len(tipos_disponibles):
+                print("Opción inválida.")
+                return
+            cot_elegida = tipos_disponibles[sel - 1]
+        except ValueError:
+            print("Debe ingresar un número válido.")
+            return
+
+        tipo_nombre = cot_elegida.tipo_cotizacion.nombre
+        tasa = cot_elegida.valor
+
+        print("\n" + "=" * 96)
+        print(f"LISTA DE PRECIOS BIMONETARIA: Pesos (ARS) y Dólares (USD {tipo_nombre})")
+        print(f"Cotización aplicada: 1 USD = $ {tasa:,.2f} ARS (Fecha: {cot_elegida.fecha})")
+        print("=" * 96)
+        print(f"{'ID':<4} | {'ISBN':<18} | {'Título':<32} | {'Precio (ARS)':<16} | {'Precio (USD)':<16}")
+        print("-" * 96)
+
+        for l in libros:
+            p_ars, p_usd = self._calcular_precio_bimonetario(l, cot_elegida)
+            titulo = l.titulo[:30] + ".." if len(l.titulo) > 32 else l.titulo
+            print(f"{l.id:<4} | {l.isbn:<18} | {titulo:<32} | $ {p_ars:>12,.2f} | U$S {p_usd:>10,.2f}")
+        print("=" * 96)
+
+    def exportar_precios_csv(self):
+        """Exporta los precios de los libros a un archivo CSV para todos los tipos de monedas y cotizaciones."""
+        import csv
+        import os
+
+        print("\n--- EXPORTAR PRECIOS A ARCHIVO CSV (TODAS LAS MONEDAS) ---")
+        libros = self.servicios['libro'].obtener_todos()
+        if not libros:
+            print("No hay libros para exportar.")
+            return
+
+        ultimas_cotizaciones = self._obtener_ultimas_cotizaciones()
+        if not ultimas_cotizaciones:
+            print("No hay cotizaciones registradas en la base de datos.")
+            resp = input("¿Desea consultar la API ahora para descargarlas? (s/n): ").strip().lower()
+            if resp == 's':
+                self.obtener_cotizaciones_api()
+                ultimas_cotizaciones = self._obtener_ultimas_cotizaciones()
+            if not ultimas_cotizaciones:
+                print("No se puede exportar sin cotizaciones cargadas.")
+                return
+
+        nombre_defecto = "precios_libros_todas_monedas.csv"
+        ruta_input = input(f"Ingrese la ruta o nombre del archivo CSV [{nombre_defecto}]: ").strip()
+        nombre_archivo = ruta_input if ruta_input else nombre_defecto
+
+        cotizaciones_lista = sorted(ultimas_cotizaciones.values(), key=lambda c: c.tipo_cotizacion.nombre)
+
+        # Encabezados: datos del libro + precio en ARS + precio en cada tipo de cotización USD
+        encabezados = ["id_libro", "isbn", "titulo", "autor", "editorial", "precio_ars"]
+        for c in cotizaciones_lista:
+            nombre_limpio = (
+                c.tipo_cotizacion.nombre.lower()
+                .replace(" ", "_")
+                .replace("(", "")
+                .replace(")", "")
+                .replace("/", "_")
+            )
+            encabezados.append(f"precio_usd_{nombre_limpio}")
+
+        try:
+            with open(nombre_archivo, mode="w", newline="", encoding="utf-8") as archivo:
+                escritor = csv.writer(archivo)
+                escritor.writerow(encabezados)
+
+                for l in libros:
+                    # Calculamos el precio base en ARS
+                    precio_base_ars, _ = self._calcular_precio_bimonetario(l, cotizaciones_lista[0])
+                    fila = [
+                        l.id,
+                        l.isbn,
+                        l.titulo,
+                        l.autor,
+                        l.editorial.nombre if l.editorial else "",
+                        f"{precio_base_ars:.2f}",
+                    ]
+                    # Para cada cotización del dólar calculamos su valor equivalente en USD
+                    for c in cotizaciones_lista:
+                        _, precio_usd = self._calcular_precio_bimonetario(l, c)
+                        fila.append(f"{precio_usd:.2f}")
+
+                    escritor.writerow(fila)
+
+            ruta_abs = os.path.abspath(nombre_archivo)
+            print(f"\n¡Archivo CSV exportado exitosamente!")
+            print(f"Ruta: {ruta_abs}")
+            print(f"Total de libros exportados: {len(libros)}")
+            print(f"Monedas y cotizaciones incluidas: ARS y USD en {len(cotizaciones_lista)} modalidades ({', '.join(c.tipo_cotizacion.nombre for c in cotizaciones_lista)})")
+
+            print("\nVista previa de las primeras filas del archivo:")
+            with open(nombre_archivo, mode="r", encoding="utf-8") as archivo:
+                for _ in range(min(4, len(libros) + 1)):
+                    print(archivo.readline().strip())
+
+        except Exception as e:
+            print(f"Error al exportar archivo CSV: {e}")

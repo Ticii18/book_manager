@@ -1,3 +1,7 @@
+## [Ejercicio 08]
+- Se agregaron las nuevas opciones especificadas en la consigna al menú
+
+
 ## [Ejercicio 07]
 - Se agregó la variable `API_URL` al archivo `.env` con la URL de la API del dólar.
 - Se implementó `obtener_cotizaciones` para descargar las cotizaciones desde la API y registrarlas en la base de datos.
