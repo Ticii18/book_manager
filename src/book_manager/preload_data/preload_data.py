@@ -1,5 +1,9 @@
 import csv
 import os
+from pathlib import Path
+from sqlalchemy import text
+
+from book_manager.database.connection import ConexionDB
 
 from book_manager.entities.entities import (
     Moneda,
@@ -176,4 +180,52 @@ def cargar_stocks(libros: dict[int, Libro]) -> dict[int, Stock]:
             stocks[id_stock] = nuevo_stock
             
     return stocks
+
+
+def cargar_datos_sql(nombre_archivo: str, conexion: ConexionDB) -> None:
+    """Carga datos ejecutando las sentencias de un archivo SQL.
+
+    Args:
+        nombre_archivo: Nombre del archivo SQL dentro de migrations/sql.
+        conexion: Objeto encargado de administrar la conexión a la base de datos.
+
+    Raises:
+        ValueError: Si el nombre del archivo no es válido.
+        FileNotFoundError: Si el archivo SQL no existe.
+    """
+    # Definimos la carpeta donde se encuentran los archivos SQL.
+    ruta_sql = Path(__file__).resolve().parent.parent / "migrations" / "sql"
+
+    # Validamos que se indique solamente un nombre de archivo SQL.
+    if Path(nombre_archivo).name != nombre_archivo:
+        raise ValueError("Debe indicarse solamente el nombre del archivo SQL.")
+
+    if not nombre_archivo.endswith(".sql"):
+        raise ValueError("El archivo debe tener extensión .sql.")
+
+    # Construimos la ruta completa del archivo solicitado.
+    archivo_sql = ruta_sql / nombre_archivo
+
+    # Comprobamos que el archivo exista.
+    if not archivo_sql.is_file():
+        raise FileNotFoundError(
+            f"No se encontró el archivo SQL: {nombre_archivo}"
+        )
+
+    # Leemos el contenido del archivo.
+    contenido_sql = archivo_sql.read_text(encoding="utf-8")
+
+    # Ejecutamos las sentencias dentro de una transacción.
+    with conexion.transaccion() as sesion:
+        # Separamos las instrucciones SQL por punto y coma.
+        sentencias = [
+            sentencia.strip()
+            for sentencia in contenido_sql.split(";")
+            if sentencia.strip()
+        ]
+
+        # Ejecutamos cada sentencia encontrada.
+        for sentencia in sentencias:
+            sesion.execute(text(sentencia))
+
 
