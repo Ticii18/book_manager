@@ -1,5 +1,12 @@
 # CHANGELOG - Sprint 3
 
+## [Ejercicio 04]
+- Se implementó la comparación de precios internos en ARS con precios web.
+- Se agregó el ingreso de la diferencia máxima antes de cada ejecución.
+- Se implementó la generación del CSV de alertas y su descarga.
+- Se probó la comparación con datos sintéticos.
+- La extracción de precios reales quedó pendiente de validación debido a respuestas HTTP 403 de Cúspide.
+
 ## [Ejercicio 03]
 - Se implementó CuspideSpider para buscar libros del catálogo propio.
 - Se incorporaron Item Loaders para organizar y normalizar los datos.
